@@ -44,7 +44,33 @@ class Planets(db.Model):
             "terrain": self.terrain
         }
     
-    
+    class People(db.Model):
+        id: Mapped[int] = mapped_column(primary_key=True)
+        gender: Mapped[str] = mapped_column(String(120), nullable=False)
+        eye_color: Mapped[str] = mapped_column(String(120), nullable=False)
+        name: Mapped[str] = mapped_column(String(120), nullable=False)
+        skin_color: Mapped[str] = mapped_column(String(120), nullable=False)
+        mass: Mapped[str] = mapped_column(String(120), nullable=False)
+        height: Mapped[str] = mapped_column(String(120), nullable=False)
+        hair_color: Mapped[str] = mapped_column(String(120), nullable=False)
+        birth_year: Mapped[str] = mapped_column(String(120), nullable=False)
+
+        def serialize(self):
+            return {
+                "id": self.id,
+                "gender": self.gender,
+                "eye_color": self.eye_color,
+                "name": self.name,
+                "skin_color": self.skin_color,
+                "mass": self.mass,
+                "height": self.height,
+                "hair_color": self.hair_color,
+                "birth_year": self.birth_year
+            }
+        
+        
+
+
 
 
 
