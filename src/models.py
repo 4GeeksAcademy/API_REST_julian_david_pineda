@@ -21,14 +21,15 @@ class User(db.Model):
 class Planets(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(), nullable=False)
-    diameter: Mapped[str] = mapped_column(String(100), nullable=False)
-    rotation_period: Mapped[str] = mapped_column(String(100), nullable=False)
-    gravity: Mapped[str] = mapped_column(String(100), nullable=False)
-    climate: Mapped[str] = mapped_column(String(100), nullable=False)
-    orbital_period: Mapped[str] = mapped_column(String(100), nullable=False)
-    population: Mapped[str] = mapped_column(String(100), nullable=False)
-    surface_water: Mapped[str] = mapped_column(String(100), nullable=False)
-    terrain: Mapped[str] = mapped_column(String(100), nullable=False)
+    diameter: Mapped[str] = mapped_column(String(100), nullable=True)
+    rotation_period: Mapped[str] = mapped_column(String(100), nullable=True)
+    gravity: Mapped[str] = mapped_column(String(100), nullable=True)
+    climate: Mapped[str] = mapped_column(String(100), nullable=True)
+    orbital_period: Mapped[str] = mapped_column(String(100), nullable=True)
+    population: Mapped[str] = mapped_column(String(100), nullable=True)
+    surface_water: Mapped[str] = mapped_column(String(100), nullable=True)
+    terrain: Mapped[str] = mapped_column(String(100), nullable=True)
+    url: Mapped[str] = mapped_column(String(200), nullable=False)
 
     def serialize(self):
         return {
@@ -41,19 +42,22 @@ class Planets(db.Model):
             "orbital_period": self.orbital_period,
             "population": self.population,
             "surface_water": self.surface_water,
-            "terrain": self.terrain
+            "terrain": self.terrain,
+            "url": self.url
         }
     
     class People(db.Model):
         id: Mapped[int] = mapped_column(primary_key=True)
-        gender: Mapped[str] = mapped_column(String(120), nullable=False)
-        eye_color: Mapped[str] = mapped_column(String(120), nullable=False)
+        gender: Mapped[str] = mapped_column(String(120), nullable=True)
+        eye_color: Mapped[str] = mapped_column(String(120), nullable=True)
         name: Mapped[str] = mapped_column(String(120), nullable=False)
-        skin_color: Mapped[str] = mapped_column(String(120), nullable=False)
-        mass: Mapped[str] = mapped_column(String(120), nullable=False)
-        height: Mapped[str] = mapped_column(String(120), nullable=False)
-        hair_color: Mapped[str] = mapped_column(String(120), nullable=False)
-        birth_year: Mapped[str] = mapped_column(String(120), nullable=False)
+        skin_color: Mapped[str] = mapped_column(String(120), nullable=True)
+        mass: Mapped[str] = mapped_column(String(120), nullable=True)
+        height: Mapped[str] = mapped_column(String(120), nullable=True)
+        hair_color: Mapped[str] = mapped_column(String(120), nullable=True)
+        birth_year: Mapped[str] = mapped_column(String(120), nullable=True)
+        url: Mapped[str] = mapped_column(String(200), nullable=False)
+
 
         def serialize(self):
             return {
@@ -65,10 +69,11 @@ class Planets(db.Model):
                 "mass": self.mass,
                 "height": self.height,
                 "hair_color": self.hair_color,
-                "birth_year": self.birth_year
+                "birth_year": self.birth_year,
+                "url": self.url
             }
         
-        
+
 
 
 
