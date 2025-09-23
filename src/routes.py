@@ -72,3 +72,13 @@ def get_single_people(people_id):
         return jsonify(person.serialize()), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+"""__________________________ Planets Endpoints_____________________________"""
+
+@api.route('/planet', methods=['GET'])
+def get_all_planets():
+    try: 
+        planet = Planets.query.all()
+        return jsonify([place.serialize() for place in planet]), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
