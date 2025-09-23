@@ -82,3 +82,14 @@ def get_all_planets():
         return jsonify([place.serialize() for place in planet]), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@api.route('/planet/<int:planet_id>', methods=['GET'])
+def get_single_planet(planet_id):
+    try:
+        planet = Planets.query.get(planet_id)
+        if planet is None:
+            return jsonify({"Error": "Planet no found"}), 404
+        return jsonify(planet.serialize()), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
