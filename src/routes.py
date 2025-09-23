@@ -93,3 +93,38 @@ def get_single_planet(planet_id):
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+"""__________________________ Favorites Endpoints_____________________________"""
+
+@api.route('/favorite/planet/<int:planet_id>', methods=['POST'])
+def add_favorite_planet(planet_id):
+
+    try:
+
+        data = request.get_json() or {}
+        user_id = data.get('user_id', 1)
+
+        user = User.query.get(user_id)
+        if user is None:
+            return jsonify({"error": "User not found"}), 404
+        
+        planet = Planets.query.get(planet_id)
+        if planet is None:
+            return jsonify({"Error": "Planet not found"}), 404
+        
+        existing = Favorite.query.filter_by(user_id=user_id, planet_id=planet_id).first()
+        if existing:
+            return jsonify({"error": "Planet already in favorites"}), 400
+        
+        favorite = Favorite(user_id=user_id, planet_id=planet_id)
+        db.session.add(favorite)
+        db.session.commit()
+
+        return jsonify({
+            "message": "Planet add to favorites successfully",
+            "favorite": favorite.serialize()
+        })
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
