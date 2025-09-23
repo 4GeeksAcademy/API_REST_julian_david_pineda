@@ -63,3 +63,12 @@ def get_all_people():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@api.route('/people/<int:people_id>', methods=['GET'])
+def get_single_people(people_id):
+    try:
+        person = People.query.get(people_id)
+        if person is None:
+            return jsonify({"error": "Person not found"}), 404
+        return jsonify(person.serialize()), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
