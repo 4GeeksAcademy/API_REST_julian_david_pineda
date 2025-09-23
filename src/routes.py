@@ -162,7 +162,7 @@ def remove_favorite_planet(planet_id):
 
         favorite = Favorite.query.filter_by(user_id=user_id, planet_id=planet_id).first()
         if favorite is None:
-            return jsonify({"error": "Favorite planet nor found"}), 404
+            return jsonify({"error": "Favorite planet not found"}), 404
         db.session.delete(favorite)
         db.session.commit()
 
@@ -172,3 +172,19 @@ def remove_favorite_planet(planet_id):
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
+@api.route('/favorite/people/<int:people_id>', methods=['DELETE'])
+def remove_favorite_people(people_id):
+    try:
+        user_id = request.args.get('user_id', 1, type=int)
+
+        favorite = Favorite.query.filter_by(user_id=user_id, people_id=people_id).first()
+        if favorite is None:
+            return jsonify({"error": "Favorite people not found"}), 404
+        db.session.delete(favorite)
+        db.session.commit()
+
+        return jsonify({"message": "People removed from favorites successfully"}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
